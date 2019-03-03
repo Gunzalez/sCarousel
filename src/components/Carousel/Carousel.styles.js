@@ -63,7 +63,7 @@ export const Title = styled.h2`
     color: #276696;
     padding: 0;
     margin: 0;
-    font-size: 3.8em;
+    font-size: 3.6em;
     font-weight: normal;
     letter-spacing: -1px;
     
