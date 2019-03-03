@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import 'whatwg-fetch';
+
 import CarouselContainer, { ButtonPrev, ButtonNext, Footer, Header, Title, Stage, SlideBox, SlideDetail, Imagery, Spinner } from './Carousel.styles';
 
 const Slide = ({ image, likes, user }) => {
@@ -26,10 +28,10 @@ class Carousel extends Component {
 
     componentDidMount(){
 
-        const photosUrl = 'https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo&per_page=26';
+        const photosUrl = 'https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo&per_page=6';
 
         fetch(photosUrl)
-            .then(response =>{
+            .then(response => {
                 if(response.statusText === "OK"){
                     return response.json()
                 }
