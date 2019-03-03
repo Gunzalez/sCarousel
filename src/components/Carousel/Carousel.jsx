@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import CarouselContainer, { ButtonPrev, ButtonNext, Footer, Header, Title, Stage, SlideBox, SlideDetail, Imagery } from './Carousel.styles';
-
-import data from '../../data/hits';
+import CarouselContainer, { ButtonPrev, ButtonNext, Footer, Header, Title, Stage, SlideBox, SlideDetail, Imagery, Spinner } from './Carousel.styles';
 
 const Slide = ({ image, likes, user }) => {
     return (
@@ -19,8 +17,32 @@ class Carousel extends Component {
         super(props);
         this.state = {
             slides: 5,
-            hits: data.hits
+            hits: []
         };
+
+        this.goToNextSlide = this.goToNextSlide.bind(this);
+        this.goToPrevSlide = this.goToPrevSlide.bind(this);
+    }
+
+    componentDidMount(){
+
+        const photosUrl = 'https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo&per_page=26';
+
+        fetch(photosUrl)
+            .then(response =>{
+                if(response.statusText === "OK"){
+                    return response.json()
+                }
+            })
+            .then( responseInJSON =>{
+                const { hits } = responseInJSON;
+                this.setState({
+                    hits
+                })
+            })
+            .catch(err => {
+                console.log('Fetch Error: ' + err);
+            })
     }
 
     createSlides(){
@@ -36,6 +58,24 @@ class Carousel extends Component {
         return Slides;
     }
 
+    goToNextSlide(){
+        const currentList = this.state.hits.slice(0);
+        const lastItem = currentList.pop();
+        currentList.unshift(lastItem);
+        this.setState({
+            hits: currentList
+        })
+    }
+
+    goToPrevSlide(){
+        const currentList = this.state.hits.slice(0);
+        const firstItem = currentList.shift();
+        currentList.push(firstItem);
+        this.setState({
+            hits: currentList
+        })
+    }
+
     render() {
 
         return (
@@ -43,17 +83,30 @@ class Carousel extends Component {
                 <Header>
                     <Title>Carousel Test</Title>
                 </Header>
-                <Stage>
-                    { this.createSlides() }
-                </Stage>
-                <Footer>
-                    <ButtonPrev>
-                        Prev
-                    </ButtonPrev>
-                    <ButtonNext>
-                        Next
-                    </ButtonNext>
-                </Footer>
+
+                { this.state.hits.length ?
+
+                        <Stage>{ this.createSlides() }</Stage>
+                    :
+                        <Spinner>Loading...</Spinner>
+                }
+
+                { this.state.hits.length ?
+
+                    <Footer>
+                        <ButtonPrev onClick={this.goToNextSlide}>
+                            Prev
+                        </ButtonPrev>
+                        <ButtonNext onClick={this.goToPrevSlide}>
+                            Next
+                        </ButtonNext>
+                    </Footer>
+
+                    :
+
+                    null
+                }
+
             </CarouselContainer>
         );
     }

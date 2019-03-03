@@ -81,6 +81,12 @@ export const Footer = styled.div`
     }
 `;
 
+export const Spinner = styled.div`
+    text-align: center;
+    padding: 20px 20px 30px 20px;
+    font-size: 1.6em;
+`;
+
 export const SlideDetail = styled.p`
     color: #276696;
     font-size: 1.4em;
@@ -97,6 +103,7 @@ export const ButtonNext = styled.button`
     margin-right: 5px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+    outline: none;
 
     @media only screen and (max-width: 480px) {
         background:rgba(255,255,255, 0.6);
