@@ -14,14 +14,13 @@ Create a simple React carousel
 ### Clone repo
 ```
 git clone git@github.com:Gunzalez/sCarousel.git
-
 cd sCarousel
 
 React app will start on port 3000 or 3001
-```
-
 yarn start
 ```
+
+
 
 ## Notes
 We will assess your work on the following basis:
