@@ -24,3 +24,4 @@ We will assess your work on the following basis:
 * Documentation is lacking a bit, I usually use a combination of README.md and jsDOCs
 * Unit testing was lacking, I'm still developing my TDD skills
 * Does not work in IE, again, I had no time to debug
+* Thank you for giving me the opportunity, if anything this test has revealed areas I need to improve on
