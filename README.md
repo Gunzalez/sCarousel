@@ -12,12 +12,11 @@ Create a simple React carousel
 * It should run in the last two versions of Chrome, Firefox, Safari and Edge
 
 ### Clone repo
-```
 git clone git@github.com:Gunzalez/sCarousel.git
-cd sCarousel
+```
+* cd sCarousel
+* yarn start
 
-React app will start on port 3000 or 3001
-yarn start
 ```
 
 
