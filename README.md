@@ -16,10 +16,7 @@ git clone git@github.com:Gunzalez/sCarousel.git
 ```
 * cd sCarousel
 * yarn start
-
 ```
-
-
 
 ## Notes
 We will assess your work on the following basis:
