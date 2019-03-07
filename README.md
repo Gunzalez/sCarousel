@@ -14,6 +14,7 @@ Create a simple React carousel
 ### Clone repo
 git clone git@github.com:Gunzalez/sCarousel.git
 ```
+* npm install
 * cd sCarousel
 * yarn start
 ```

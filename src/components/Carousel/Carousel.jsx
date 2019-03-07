@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { getPhotos } from '../../ajaxWrapper';
+
 import 'whatwg-fetch';
 
 import CarouselContainer, { ButtonPrev, ButtonNext, Footer, Header, Title, Stage, SlideBox, SlideDetail, Imagery, Spinner } from './Carousel.styles';
@@ -30,34 +32,11 @@ class Carousel extends Component {
 
         const photosUrl = 'https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo&per_page=6';
 
-        fetch(photosUrl)
-            .then(response => {
-                if(response.statusText === "OK"){
-                    return response.json()
-                }
+        getPhotos(photosUrl)
+            .then(data => {
+                const { hits } = data;
+                this.setState({ hits })
             })
-            .then( responseInJSON =>{
-                const { hits } = responseInJSON;
-                this.setState({
-                    hits
-                })
-            })
-            .catch(err => {
-                console.log('Fetch Error: ' + err);
-            })
-    }
-
-    createSlides(){
-        const Slides = [];
-        for(let i=0; i < this.state.slides; i++){
-            Slides.push(
-                <Slide key={i}
-                   image={this.state.hits[i]['largeImageURL']}
-                   user={this.state.hits[i]['user']}
-                   likes={this.state.hits[i]['likes']} />
-            )
-        }
-        return Slides;
     }
 
     goToNextSlide(){
@@ -80,6 +59,21 @@ class Carousel extends Component {
 
     render() {
 
+        const { state: { slides, hits }, goToNextSlide, goToPrevSlide } = this;
+
+        const displaySlides = () => {
+            const Slides = [];
+            for(let i=0; i < slides; i++){
+                Slides.push(
+                    <Slide key={i}
+                        image={hits[i]['largeImageURL']}
+                        user={hits[i]['user']}
+                        likes={hits[i]['likes']} />
+                )
+            }
+            return Slides;
+        };
+
         return (
             <CarouselContainer>
                 <Header>
@@ -88,7 +82,7 @@ class Carousel extends Component {
 
                 { this.state.hits.length ?
 
-                        <Stage>{ this.createSlides() }</Stage>
+                        <Stage>{ displaySlides() }</Stage>
                     :
                         <Spinner>Loading...</Spinner>
                 }
@@ -96,10 +90,10 @@ class Carousel extends Component {
                 { this.state.hits.length ?
 
                     <Footer>
-                        <ButtonPrev onClick={this.goToNextSlide}>
+                        <ButtonPrev onClick={ goToNextSlide }>
                             Prev
                         </ButtonPrev>
-                        <ButtonNext onClick={this.goToPrevSlide}>
+                        <ButtonNext onClick={ goToPrevSlide }>
                             Next
                         </ButtonNext>
                     </Footer>
